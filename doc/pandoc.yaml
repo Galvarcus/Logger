@@ -1,0 +1,5 @@
+title: Logger
+author: Galvarcus
+abstract: Shows and logs the messages of Vim9 plugins.
+filename: logger.txt
+vimdoc-prefix: logger
