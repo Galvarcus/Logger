@@ -1,0 +1,70 @@
+name: Tests
+on:
+  push:
+    branches:
+      - main
+      - Development
+    paths:
+      - import/**
+      - plugin/**
+      - tests/**
+      - .github/workflows/tests.yml
+  pull_request:
+    paths:
+      - import/**
+      - plugin/**
+      - tests/**
+      - .github/workflows/tests.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    name: Tests on Vim ${{ matrix.vim }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # latest is the newest build. v9.1.0016 is the oldest AppImage of
+        # Vim 9.1, the minimum version Logger supports.
+        vim: [latest, v9.1.0016]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Distro packages of Vim lag behind upstream. vim/vim-appimage
+      # publishes prebuilt AppImages, so no build from source is needed.
+      - name: Install Vim
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ matrix.vim }}" = latest ]; then
+            api=https://api.github.com/repos/vim/vim-appimage/releases/latest
+          else
+            api=https://api.github.com/repos/vim/vim-appimage/releases/tags/${{ matrix.vim }}
+          fi
+          url=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "$api" \
+            | jq -r '.assets[] | select(.name | test("^Vim-v.*-x86_64\\.AppImage$")) | .browser_download_url')
+          curl -sL -o /tmp/vim.appimage "$url"
+          chmod +x /tmp/vim.appimage
+          cd /tmp && ./vim.appimage --appimage-extract
+          ln -s /tmp/squashfs-root/AppRun /tmp/squashfs-root/vim
+          echo "/tmp/squashfs-root" >> "$GITHUB_PATH"
+
+      - name: Vim version
+        run: vim --version
+
+      # -es mode hides all errors. The verbose log shows why Vim stopped
+      # when it did not write the results file.
+      - name: Run tests
+        run: |
+          vim -es -u NONE -N -V20/tmp/vim.log \
+            -c 'set rtp+=.' \
+            -c 'source tests/harness.vim' -c 'quit' || true
+          if [ ! -f tests/results.txt ]; then
+            echo "::error::tests/results.txt was not created. Verbose log follows."
+            cat /tmp/vim.log
+            exit 1
+          fi
+          cat tests/results.txt
+          grep -qx 'All tests passed' tests/results.txt
