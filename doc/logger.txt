@@ -5,36 +5,33 @@
 
                                        Type |gO| to see the table of contents.
 
-Logger ......................................................... |logger-logger|
-  Requirements ........................................... |logger-requirements|
-  Installation ........................................... |logger-installation|
-  Quick start ............................................. |logger-quick-start|
-  Usage ......................................................... |logger-usage|
-    Logger objects ..................................... |logger-logger-objects|
-    Methods ................................................... |logger-methods|
-    Message format ..................................... |logger-message-format|
-    Exceptions ............................................. |logger-exceptions|
-    Levels ..................................................... |logger-levels|
-    Startup messages ................................. |logger-startup-messages|
-  Configuration ......................................... |logger-configuration|
-  Log files ................................................. |logger-log-files|
-  Commands ................................................... |logger-commands|
-  License ..................................................... |logger-license|
+Requirements ............................................. |logger-requirements|
+Installation ............................................. |logger-installation|
+Quick start ............................................... |logger-quick-start|
+Usage ........................................................... |logger-usage|
+  Logger objects ....................................... |logger-logger-objects|
+  Methods ..................................................... |logger-methods|
+  Message format ....................................... |logger-message-format|
+  Exceptions ............................................... |logger-exceptions|
+  Levels ....................................................... |logger-levels|
+  Startup messages ................................... |logger-startup-messages|
+Configuration ........................................... |logger-configuration|
+Log files ................................................... |logger-log-files|
+Commands ..................................................... |logger-commands|
+License ....................................................... |logger-license|
 
-==============================================================================
-Logger                                                           *logger-logger*
 
 Logger shows and logs the messages of Vim9 plugins. Each message names the
 plugin, script, and method that sent it. Logger can also write the messages of
 each plugin to its own log file.
 
-------------------------------------------------------------------------------
+==============================================================================
 Requirements                                               *logger-requirements*
 
 Vim 9.1 or later. Logger does not load in Vim 9.0, in Neovim, or in compatible
 mode.
 
-------------------------------------------------------------------------------
+==============================================================================
 Installation                                               *logger-installation*
 
 Install Logger together with each plugin that uses it.
@@ -50,7 +47,7 @@ With vim-plug:
     Plug 'Galvarcus/Logger'
 <
 
-------------------------------------------------------------------------------
+==============================================================================
 Quick start                                                 *logger-quick-start*
 
 Import Logger at the top of a script, and make one `Logger` for the script:
@@ -72,10 +69,11 @@ A call to `Save()` in `foo.vim` echoes this message:
     MyPlugin - foo.vim - Save: Saved.
 <
 
-------------------------------------------------------------------------------
+==============================================================================
 Usage                                                             *logger-usage*
 
-LOGGER OBJECTS                                           *logger-logger-objects*
+------------------------------------------------------------------------------
+Logger objects                                           *logger-logger-objects*
 
 `Log.Logger.new({plugin}, {script}, {level})` makes a `Logger`. All arguments
 are optional.
@@ -88,7 +86,8 @@ are optional.
 Make one `Logger` in each script. All `Logger` objects with the same plugin
 name use the same options and the same log file.
 
-METHODS                                                         *logger-methods*
+------------------------------------------------------------------------------
+Methods                                                         *logger-methods*
 
     Method                                   Effect ~
 
@@ -117,7 +116,8 @@ empty, Logger uses the name of the function that called it. A class method
 shows as `Class.Method`. Code at script level and code in a lambda have no
 method name.
 
-MESSAGE FORMAT                                           *logger-message-format*
+------------------------------------------------------------------------------
+Message format                                           *logger-message-format*
 
 An echoed message has this form:
 
@@ -128,7 +128,8 @@ Logger omits an empty plugin, script, or method name. The tags are `[WARN]`,
 `[ERROR]`, and `[EXCEPTION]`. An info message has no tag. An exception also
 shows its throwpoint on a second line.
 
-EXCEPTIONS                                                   *logger-exceptions*
+------------------------------------------------------------------------------
+Exceptions                                                   *logger-exceptions*
 
 Catch an exception and show it:
 
@@ -160,7 +161,8 @@ exception without Logger, so this puts it in the log file too. When a caller
 catches the text and calls `Exception()`, Logger shows the text once and does
 not record it again.
 
-LEVELS                                                           *logger-levels*
+------------------------------------------------------------------------------
+Levels                                                           *logger-levels*
 
     Level   Messages ~
     `-1`    None
@@ -168,12 +170,13 @@ LEVELS                                                           *logger-levels*
     `1`     Warnings, errors, and exceptions
     `2`     All
 
-STARTUP MESSAGES                                       *logger-startup-messages*
+------------------------------------------------------------------------------
+Startup messages                                       *logger-startup-messages*
 
 Logger holds messages sent before `VimEnter` and echoes them after Vim starts.
 |logger-footnote1|
 
-------------------------------------------------------------------------------
+==============================================================================
 Configuration                                             *logger-configuration*
 
 Each option has a global variable, `g:logger_{option}`, and a variable for
@@ -215,7 +218,7 @@ only its errors and warnings:
     g:logger_myplugin_level = 1
 <
 
-------------------------------------------------------------------------------
+==============================================================================
 Log files                                                     *logger-log-files*
 
 With `log_file` on, Logger writes the messages of each plugin to one file for
@@ -238,13 +241,13 @@ Each message is one line. An exception adds its throwpoint on the next line:
 When Logger cannot write the file, it shows one warning. That `Logger` then
 stops writing to the file until Vim restarts.
 
-------------------------------------------------------------------------------
+==============================================================================
 Commands                                                       *logger-commands*
 
 `:LoggerMessages` opens a scratch window with the last 200 messages of all
 plugins.
 
-------------------------------------------------------------------------------
+==============================================================================
 License                                                         *logger-license*
 
 GNU General Public License 3.0. The full text is in `LICENSE`.
