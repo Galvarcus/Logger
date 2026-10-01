@@ -8,6 +8,12 @@ of each plugin to its own log file.
 
 [![Vim](https://img.shields.io/badge/Vim-9.1%2B-019733?logo=vim)](https://www.vim.org)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+main:
+[![Generate Vimdoc](https://github.com/Galvarcus/Logger/actions/workflows/vimdoc.yml/badge.svg?branch=main)](https://github.com/Galvarcus/Logger/actions/workflows/vimdoc.yml)
+[![Tests](https://github.com/Galvarcus/Logger/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/Galvarcus/Logger/actions/workflows/tests.yml)
+Development:
+[![Generate Vimdoc](https://github.com/Galvarcus/Logger/actions/workflows/vimdoc.yml/badge.svg?branch=Development)](https://github.com/Galvarcus/Logger/actions/workflows/vimdoc.yml)
+[![Tests](https://github.com/Galvarcus/Logger/actions/workflows/tests.yml/badge.svg?branch=Development)](https://github.com/Galvarcus/Logger/actions/workflows/tests.yml)
 
 **Contents**
 
