@@ -78,7 +78,7 @@ export def Show(): void
     lines->add($'[{h.time}] {h.lines[0]}')
     lines->extend(h.lines[1 : ]->mapnew((_, l) => $'           {l}'))
   endfor
-  new
+  tabnew
   setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted
   setlocal filetype=log
   setline(1, lines)
