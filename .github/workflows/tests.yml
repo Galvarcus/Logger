@@ -30,7 +30,7 @@ jobs:
         vim: [latest, v9.1.0016]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       # Distro packages of Vim lag behind upstream. vim/vim-appimage
       # publishes prebuilt AppImages, so no build from source is needed.
